@@ -3,8 +3,6 @@ name: PR Check Workflow
 on:
   pull_request:
     types: [opened, edited, reopened, synchronize, ready_for_review, converted_to_draft]
-    branches:
-      - main  # Specify the branch(es) to trigger on
 
 jobs:
   check_pr:
