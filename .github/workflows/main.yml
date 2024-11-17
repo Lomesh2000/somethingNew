@@ -1,0 +1,29 @@
+name: PR Check Workflow
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize, ready_for_review, converted_to_draft]
+    branches:
+      - main  # Specify the branch(es) to trigger on
+
+jobs:
+  check_pr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run checks for the pull request
+        run: |
+          echo "Checking pull request..."
+          # Add your custom check commands here
+          # For example, you could check for file changes, run linters, etc.
+      - name: Check for file changes in docs folder
+        run: |
+          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          if [[ "$changed_files" == *"docs/"* ]]; then
+            echo "Documentation files were changed."
+          else
+            echo "No documentation files were changed."
+          fi
