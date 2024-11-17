@@ -13,9 +13,9 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Fetch the full history of commits
-      - name: Fetch target branch (main) to compare with PR branch
+      - name: Fetch target branch (master) to compare with PR branch
         run: |
-          git fetch origin main    
+          git fetch origin master    
       - name: Run checks for the pull request
         run: |
           echo "Checking pull request..."
@@ -24,10 +24,10 @@ jobs:
       - name: Check for file changes in docs folder
         run: |
           # Ensure that both 'origin/main' and the PR branch are available for comparison
-          git fetch origin main
+          git fetch origin master
           
           # List changed files between 'origin/main' and the current PR commit ($GITHUB_SHA)
-          changed_files=$(git diff --name-only origin/main...$GITHUB_SHA)
+          changed_files=$(git diff --name-only origin/master...$GITHUB_SHA)
 
           # Check if any of the changed files are in the 'docs/' folder
           if [[ "$changed_files" == *"docs/"* ]]; then
