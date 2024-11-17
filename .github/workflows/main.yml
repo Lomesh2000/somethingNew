@@ -11,7 +11,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
+        with:
+          fetch-depth: 0  # Fetch the full history of commits
       - name: Run checks for the pull request
         run: |
           echo "Checking pull request..."
@@ -19,7 +20,7 @@ jobs:
           # For example, you could check for file changes, run linters, etc.
       - name: Check for file changes in docs folder
         run: |
-          changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          changed_files=$(git diff --name-only origin/main...$GITHUB_SHA)
           if [[ "$changed_files" == *"docs/"* ]]; then
             echo "Documentation files were changed."
           else
